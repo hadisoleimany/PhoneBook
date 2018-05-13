@@ -5,6 +5,8 @@
  */
 package com.mycompany.phonebook;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author hsoleimany
@@ -37,7 +39,7 @@ public class frmPhoneBook extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtaddress = new javax.swing.JTextArea();
         btnSave = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btndelete = new javax.swing.JButton();
@@ -45,6 +47,11 @@ public class frmPhoneBook extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,11 +74,16 @@ public class frmPhoneBook extends javax.swing.JFrame {
 
         jLabel4.setText("Address : ");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtaddress.setColumns(20);
+        txtaddress.setRows(5);
+        jScrollPane2.setViewportView(txtaddress);
 
         btnSave.setText("Save");
+        btnSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveActionPerformed(evt);
+            }
+        });
 
         btnEdit.setText("Update");
 
@@ -150,6 +162,19 @@ public class frmPhoneBook extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        Phonebook p = new Phonebook(txtname.getText(), txtfamily.getText(), txtaddress.getText(), txtMobile.getText());
+        new dbconnection().saveContact(p);
+
+
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+               JOptionPane.showMessageDialog(rootPane," btnSave");
+        new dbconnection().getContact();
+                
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -197,8 +222,8 @@ public class frmPhoneBook extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField txtMobile;
+    private javax.swing.JTextArea txtaddress;
     private javax.swing.JTextField txtfamily;
     private javax.swing.JTextField txtname;
     private javax.swing.JTextField txtsearch;
